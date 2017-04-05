@@ -1,2 +1,25 @@
 $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import '~bootstrap-sass/assets/stylesheets/bootstrap';
+
+$solid-black: #000;
+$background-color: #4e4e4e;
+$font-color: #dfdfdf;
+$white: #fff;
+$yellow: #ff0;
+
+.square {
+  border: 2px solid $solid-black;
+  height: 80px;
+  text-align: center;
+  width: 80px;
+}
+
+img {
+  height: 70px;
+  object-fit: cover;
+  width: 70px;
+}
+
+.gb-outside-order {
+  margin-left: 20px;
+}
