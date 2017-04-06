@@ -1,9 +1,8 @@
 'use strict'
 
 const getFormFields = require(`../../../lib/get-form-fields`)
-const store = require('../store')
-const config = require('../config')
 
+const store = require('../store')
 const api = require('./api')
 const ui = require('./ui')
 
@@ -24,13 +23,15 @@ const onSignIn = function (event) {
   .fail(ui.signInFailure)
 }
 const onSignOut = (data) => {
+  if (store.user == null) {
+    console.log('No One to Sign Out')
+    alert('No User Signed In')
+    return
+  }
   console.log('Api:sign OUT called')
-  return $.ajax({
-    url: config.apiOrigin + '/sign-out/' + store.user.id,
-    method: 'DELETE',
-    headers: {
-      Authorization: 'Token token=' + store.user.token}
-  })
+  api.signOut()
+  .then(ui.signOutSuccess)
+  .catch(ui.signOutFailure)
 }
 const addHandlers = () => {
   $('#sign-up').on('submit', onSignUp)

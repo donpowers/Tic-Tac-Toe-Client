@@ -1,5 +1,6 @@
 'use strict'
 
+const api = require('./api')
 const store = require('../store')
 
 const signUpSuccess = (data) => {
@@ -12,6 +13,10 @@ const signUpFailure = (error) => {
 const signInSuccess = (data) => {
   console.log('Sign-in success: ', data)
   store.user = data.user
+  const createData = {}
+  api.createGame(createData)
+    .then(createGameSuccess)
+    .catch(createGameFailure)
 }
 
 const signInFailure = (error) => {
@@ -23,7 +28,6 @@ const signOutSuccess = () => {
   // clean up the stored value
   store.user = null
 }
-
 const signOutFailure = (error) => {
   console.log('Sign Out Failure')
   console.error(error)
@@ -33,10 +37,16 @@ const changePasswordSuccess = () => {
   // clean up the stored value
   store.user = null
 }
-
 const changePasswordFailure = (error) => {
   console.log('Change Password Out Failure')
   console.error(error)
+}
+const createGameSuccess = (data) => {
+  store.game = data.game
+  console.log('createGameSuccess called', store)
+}
+const createGameFailure = (data) => {
+  console.log('createGameFailure called')
 }
 module.exports = {
   signUpSuccess,
