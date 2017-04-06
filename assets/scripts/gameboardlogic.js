@@ -15,15 +15,15 @@ const gameBoardImages = [
   }
 ]
 const gameCellIDs = [
-  'cell-0',
-  'cell-1',
-  'cell-2',
-  'cell-3',
-  'cell-4',
-  'cell-5',
-  'cell-6',
-  'cell-7',
-  'cell-8'
+  'cell-0-img',
+  'cell-1-img',
+  'cell-2-img',
+  'cell-3-img',
+  'cell-4-img',
+  'cell-5-img',
+  'cell-6-img',
+  'cell-7-img',
+  'cell-8-img'
 ]
 const currentGame = {
   'game': {
@@ -67,12 +67,11 @@ const flipMark = function () {
   }
   // disable click
   console.log('ID: ' + this.id)
-  $(this.id).off('click')
+  // $(this.id).off('click')
   // check for a winner
   if (checkForWinner()) {
     alert('We have a winner')
     // update who is the next player
-    updatePlayerButton()
   } else if (anyMovesLeft()) {
     updatePlayerButton()
   } else {
@@ -81,15 +80,19 @@ const flipMark = function () {
 }
 
 // Adds the cards to the DOM.
-const setUpGameBoard = function () {
+const setUpGameBoardHandlers = function (firstTime) {
   console.log('setUpGameBoard')
-  for (let i = 0; i < gameCellIDs.length; i++) {
-    const elementID = gameCellIDs[i] + '-img'
-    console.log('elementID: ' + elementID)
-    console.log($('elementID'))
-    $('elementID').one('click', flipMark)
-    // c onst element = document.getElementById(elementID)
-    // element.addEventListener('click', flipMark)
+  $('#cell-0-img').one('click', flipMark)
+  $('#cell-1-img').one('click', flipMark)
+  $('#cell-2-img').one('click', flipMark)
+  $('#cell-3-img').one('click', flipMark)
+  $('#cell-4-img').one('click', flipMark)
+  $('#cell-5-img').one('click', flipMark)
+  $('#cell-6-img').one('click', flipMark)
+  $('#cell-7-img').one('click', flipMark)
+  $('#cell-8-img').one('click', flipMark)
+  if (firstTime) {
+    $('#replay-button').on('click', replayButtonClick)
   }
 }
 const updatePlayerButton = function () {
@@ -121,6 +124,8 @@ const transformLocation = function (imgID) {
 
 const replayButtonClick = function () {
   console.log('replayButtonClick')
+  clearBoard()
+  setUpGameBoardHandlers(false)
 }
 
 const checkForWinner = function () {
@@ -156,7 +161,14 @@ const anyMovesLeft = function () {
   console.log('anyMovesLeft: ' + result)
   return result
 }
+const clearBoard = function () {
+  // reset to blank images
+  for (let i = 0; i < gameCellIDs.length; i++) {
+    const element = document.getElementById(gameCellIDs[i])
+    element.setAttribute('src', gameBoardImages[2].markImage)
+  }
+}
 
 module.exports = {
-  setUpGameBoard
+  setUpGameBoardHandlers
 }
