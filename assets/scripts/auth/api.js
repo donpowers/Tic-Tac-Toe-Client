@@ -38,9 +38,22 @@ const createGame = (data) => {
     data
   })
 }
+const updateGameState = (data) => {
+  console.log('updateGameState Called showing store', store)
+  console.log('updateGameState Called showing data', data)
+  const id = store.game.id
+  return $.ajax({
+    url: config.apiOrigin + '/games/' + id,
+    method: 'PATCH',
+    headers: {
+      Authorization: 'Token token=' + store.user.token},
+    data
+  })
+}
 module.exports = {
   signUp,
   signIn,
   signOut,
-  createGame
+  createGame,
+  updateGameState
 }
