@@ -11,7 +11,7 @@ $(() => {
 const authEvents = require('./auth/events.js')
 $(() => {
   authEvents.addHandlers()
-  gameboardlogic.setUpGameBoard()
+  gameboardlogic.setUpGameBoardHandlers(true)
 })
 // use require with a reference to bundle the file and use it in this file
 // const example = require('./example')
