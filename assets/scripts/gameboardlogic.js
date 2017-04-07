@@ -1,5 +1,9 @@
 'use strict'
 
+const api = require('./auth/api')
+const ui = require('./auth/ui')
+const store = require('./store')
+
 const gameBoardImages = [
   {
     mark: 'X',
@@ -50,14 +54,29 @@ const winningCombinations = [
   ['6', '4', '2'],
   ['0', '4', '8']
 ]
+
+const gameMoveUpdate = {
+  'game': {
+    'cell': {
+      'index': 0,
+      'value': 'x'
+    },
+    'over': false
+  }
+}
 const flipMark = function () {
   console.log('flipMark Called', this)
   console.log('gameBoardImages[0].markImage: ' + gameBoardImages[1].markImage)
   // update move
+  const cellToUpdate = parseInt(transformLocation(this.id))
+  console.log('flipMark updating cell: ' + cellToUpdate)
   if (isXplaying()) {
-    currentGame.game.cells[parseInt(transformLocation(this.id))] = 'x'
+    currentGame.game.cells[cellToUpdate] = 'x'
+    gameMoveUpdate.game.cell.index = cellToUpdate
+    gameMoveUpdate.game.cell.value = 'x'
   } else {
-    currentGame.game.cells[parseInt(transformLocation(this.id))] = 'o'
+    gameMoveUpdate.game.cell.index = cellToUpdate
+    gameMoveUpdate.game.cell.value = 'o'
   }
   console.log('currentGame: ', currentGame)
   if (isXplaying()) {
@@ -65,18 +84,21 @@ const flipMark = function () {
   } else {
     this.setAttribute('src', gameBoardImages[1].markImage)
   }
-  // disable click
-  console.log('ID: ' + this.id)
-  // $(this.id).off('click')
   // check for a winner
   if (checkForWinner()) {
     alert('We have a winner')
-    // update who is the next player
+    gameMoveUpdate['game'].over = true
   } else if (anyMovesLeft()) {
     updatePlayerButton()
+    gameMoveUpdate['game'].over = false
   } else {
     alert('Cats Meow, Try Again')
+    gameMoveUpdate.game.over = true
   }
+  console.log('flipMark gameMoveUpdate: ', gameMoveUpdate)
+  api.updateGameState(gameMoveUpdate)
+    .then(ui.updateGameStateSuccess)
+    .catch(ui.updateGameStateFailure)
 }
 
 // Adds the cards to the DOM.
@@ -129,14 +151,15 @@ const replayButtonClick = function () {
 }
 
 const checkForWinner = function () {
+  console.log('checkForWinner called')
   let result
   for (let i = 0; i < winningCombinations.length; i++) {
     const value1 = currentGame.game.cells[winningCombinations[i][0]]
     const value2 = currentGame.game.cells[winningCombinations[i][1]]
     const value3 = currentGame.game.cells[winningCombinations[i][2]]
-    console.log('game moves: ' + currentGame.game.cells)
-    console.log(winningCombinations[i][0] + winningCombinations[i][1] + winningCombinations[i][2])
-    console.log('value1: ' + value1 + ' value2: ' + value2 + ' value3: ' + value3)
+    // console.log('game moves: ' + currentGame.game.cells)
+    // console.log(winningCombinations[i][0] + winningCombinations[i][1] + winningCombinations[i][2])
+    // console.log('value1: ' + value1 + ' value2: ' + value2 + ' value3: ' + value3)
     if (value1 === '' || value2 === '' || value3 === '') {
       continue
     }
