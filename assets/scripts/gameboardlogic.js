@@ -99,6 +99,7 @@ const flipMark = function () {
   api.updateGameState(gameMoveUpdate)
     .then(ui.updateGameStateSuccess)
     .catch(ui.updateGameStateFailure)
+  getCurrentGameStats()
 }
 
 // Adds the cards to the DOM.
@@ -191,7 +192,11 @@ const clearBoard = function () {
     element.setAttribute('src', gameBoardImages[2].markImage)
   }
 }
-
+const getCurrentGameStats = function () {
+  api.getUserGames()
+    .then(ui.getUserGamesSuccess)
+    .catch(ui.getUserGamesFailure)
+}
 module.exports = {
   setUpGameBoardHandlers
 }
