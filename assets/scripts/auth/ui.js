@@ -34,8 +34,6 @@ const signOutFailure = (error) => {
 }
 const changePasswordSuccess = () => {
   console.log('Change Password success')
-  // clean up the stored value
-  store.user = null
 }
 const changePasswordFailure = (error) => {
   console.log('Change Password Out Failure')

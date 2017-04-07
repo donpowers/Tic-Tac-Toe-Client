@@ -19,6 +19,17 @@ const signIn = (data) => {
     data
   })
 }
+const changePassword = function (data) {
+  return $.ajax({
+    method: 'PATCH',
+    url: config.apiOrigin + '/change-password/' + store.user.id,
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    },
+    data: data
+  })
+}
+
 const signOut = (data) => {
   console.log('Api:sign OUT called')
   return $.ajax({
@@ -65,5 +76,6 @@ module.exports = {
   signOut,
   createGame,
   updateGameState,
-  getUserGames
+  getUserGames,
+  changePassword
 }
