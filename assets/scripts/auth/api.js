@@ -50,10 +50,20 @@ const updateGameState = (data) => {
     data
   })
 }
+const getUserGames = (data) => {
+  console.log('getUserGames Called')
+  return $.ajax({
+    url: config.apiOrigin + '/games',
+    method: 'GET',
+    headers: {
+      Authorization: 'Token token=' + store.user.token}
+  })
+}
 module.exports = {
   signUp,
   signIn,
   signOut,
   createGame,
-  updateGameState
+  updateGameState,
+  getUserGames
 }
