@@ -23,6 +23,7 @@ const onSignIn = function (event) {
   .fail(ui.signInFailure)
 }
 const onSignOut = (data) => {
+  event.preventDefault()
   if (store.user == null) {
     console.log('No One to Sign Out')
     alert('No User Signed In')

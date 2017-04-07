@@ -2,6 +2,7 @@
 
 const api = require('./api')
 const store = require('../store')
+const gameboardlogic = require('../gameboardlogic')
 
 const signUpSuccess = (data) => {
   console.log(data)
@@ -17,6 +18,7 @@ const signInSuccess = (data) => {
   api.createGame(createData)
     .then(createGameSuccess)
     .catch(createGameFailure)
+  gameboardlogic.setUpGameBoardHandlers(true)
 }
 
 const signInFailure = (error) => {
@@ -47,7 +49,7 @@ const createGameFailure = (data) => {
   console.log('createGameFailure called')
 }
 const updateGameStateSuccess = (data) => {
-  console.log('updateGameStateSuccess success: ', data)
+  console.log('updateGameStateSuccess success data: ', data)
 }
 const updateGameStateFailure = (data) => {
   console.log('updateGameStateFailure called', data)

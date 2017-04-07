@@ -2,16 +2,18 @@
 
 const api = require('./auth/api')
 const ui = require('./auth/ui')
-const store = require('./store')
+// const store = require('./store')
 
 const gameBoardImages = [
   {
     mark: 'X',
-    markImage: '../assets/images/X.png'
+    markImage: '../assets/images/X.png',
+    buttonXlabel: 'PLAYER X IS PLAYING'
   },
   {
     mark: 'O',
-    markImage: '../assets/images/O.png'
+    markImage: '../assets/images/O.png',
+    buttonOlabel: 'PLAYER O IS PLAYING'
   },
   {
     mark: 'blank',
@@ -64,9 +66,10 @@ const gameMoveUpdate = {
     'over': false
   }
 }
+let isPlayerX = true
+
 const flipMark = function () {
   console.log('flipMark Called', this)
-  console.log('gameBoardImages[0].markImage: ' + gameBoardImages[1].markImage)
   // update move
   const cellToUpdate = parseInt(transformLocation(this.id))
   console.log('flipMark updating cell: ' + cellToUpdate)
@@ -75,31 +78,35 @@ const flipMark = function () {
     gameMoveUpdate.game.cell.index = cellToUpdate
     gameMoveUpdate.game.cell.value = 'x'
   } else {
+    currentGame.game.cells[cellToUpdate] = 'o'
     gameMoveUpdate.game.cell.index = cellToUpdate
     gameMoveUpdate.game.cell.value = 'o'
   }
   console.log('currentGame: ', currentGame)
+  // Update the cell image for this turn
   if (isXplaying()) {
     this.setAttribute('src', gameBoardImages[0].markImage)
   } else {
     this.setAttribute('src', gameBoardImages[1].markImage)
   }
   // check for a winner
-  if (checkForWinner()) {
-    alert('We have a winner')
+  const winner = checkForWinner()
+  if (winner) {
     gameMoveUpdate['game'].over = true
+    alert(winner + ' is winner!')
   } else if (anyMovesLeft()) {
     updatePlayerButton()
     gameMoveUpdate['game'].over = false
+    isPlayerX = !isPlayerX
   } else {
-    alert('Cats Meow, Try Again')
     gameMoveUpdate.game.over = true
+    alert('Cats Meow, Try Again')
   }
   console.log('flipMark gameMoveUpdate: ', gameMoveUpdate)
   api.updateGameState(gameMoveUpdate)
     .then(ui.updateGameStateSuccess)
     .catch(ui.updateGameStateFailure)
-  getCurrentGameStats()
+  // getCurrentGameStats()
 }
 
 // Adds the cards to the DOM.
@@ -120,35 +127,34 @@ const setUpGameBoardHandlers = function (firstTime) {
 }
 const updatePlayerButton = function () {
   const element = document.getElementById('game-button')
-  console.log('updatePlayer called')
+  console.log('updatePlayerButton called')
   if (isXplaying()) {
-    element.value = 'It\'s O\'s Turn!'
+    element.value = gameBoardImages[1].buttonOlabel
   } else {
-    element.value = 'It\'s X\'s Turn!'
+    element.value = gameBoardImages[0].buttonXlabel
   }
 }
 const isXplaying = function () {
-  const element = document.getElementById('game-button')
-  console.log('updatePlayer called')
-  let result = true
-  if (!(element.value === 'It\'s X\'s Turn!')) {
-    console.log('isXplay no: ' + element.value)
-    result = false
+  let result = false
+  if (isPlayerX) {
+    result = true
   }
-  console.log('isXplaying returning', result)
+  console.log('isXplaying :' + result)
   return result
 }
-
 const transformLocation = function (imgID) {
   const data = imgID.split('-')
   console.log('transformLocation returning:' + data[1])
   return data[1]
 }
-
 const replayButtonClick = function () {
   console.log('replayButtonClick')
   clearBoard()
+  clearGameState()
   setUpGameBoardHandlers(false)
+  resetPlayerButtonToX()
+  isPlayerX = true
+  console.log('currentGame data: ', currentGame)
 }
 
 const checkForWinner = function () {
@@ -174,7 +180,9 @@ const checkForWinner = function () {
 }
 const anyMovesLeft = function () {
   let result = false
-  for (let i = 0; i < winningCombinations.length; i++) {
+  // console.log('anyMovesLeft currentGame: ', currentGame)
+  for (let i = 0; i < currentGame.game.cells.length; i++) {
+    // console.log('anyMovesLeft: ' + currentGame.game.cells[i])
     if (currentGame.game.cells[i].length > 0) {
       continue
     } else {
@@ -182,7 +190,7 @@ const anyMovesLeft = function () {
       break
     }
   }
-  console.log('anyMovesLeft: ' + result)
+  console.log('anyMovesLeft returning: ' + result)
   return result
 }
 const clearBoard = function () {
@@ -192,10 +200,21 @@ const clearBoard = function () {
     element.setAttribute('src', gameBoardImages[2].markImage)
   }
 }
+const clearGameState = function () {
+  console.log('clearGameState called')
+  for (let i = 0; i < currentGame.game.cells.length; i++) {
+    currentGame.game.cells[i] = ''
+  }
+}
 const getCurrentGameStats = function () {
   api.getUserGames()
     .then(ui.getUserGamesSuccess)
     .catch(ui.getUserGamesFailure)
+}
+const resetPlayerButtonToX = function () {
+  const element = document.getElementById('game-button')
+  console.log('resetPlayerButtonToX called')
+  element.value = gameBoardImages[0].buttonXlabel
 }
 module.exports = {
   setUpGameBoardHandlers
