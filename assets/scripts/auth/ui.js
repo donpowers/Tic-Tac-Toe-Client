@@ -29,6 +29,7 @@ const signOutSuccess = () => {
   console.log('Sign Out success: ')
   // clean up the stored value
   store.user = null
+  gameboardlogic.cleanUpAfterPlayerSignOff()
 }
 const signOutFailure = (error) => {
   console.log('Sign Out Failure')

@@ -71,6 +71,7 @@ let isPlayerX = true
 const flipMark = function () {
   console.log('flipMark Called', this)
   // update move
+  $('#' + this.id).off()
   const cellToUpdate = parseInt(transformLocation(this.id))
   console.log('flipMark updating cell: ' + cellToUpdate)
   if (isXplaying()) {
@@ -94,6 +95,7 @@ const flipMark = function () {
   if (winner) {
     gameMoveUpdate['game'].over = true
     alert(winner + ' is winner!')
+    disableGameBoardClicks()
   } else if (anyMovesLeft()) {
     updatePlayerButton()
     gameMoveUpdate['game'].over = false
@@ -111,20 +113,21 @@ const flipMark = function () {
 
 // Adds the cards to the DOM.
 const setUpGameBoardHandlers = function (firstTime) {
-  console.log('setUpGameBoard')
-  $('#cell-0-img').one('click', flipMark)
-  $('#cell-1-img').one('click', flipMark)
-  $('#cell-2-img').one('click', flipMark)
-  $('#cell-3-img').one('click', flipMark)
-  $('#cell-4-img').one('click', flipMark)
-  $('#cell-5-img').one('click', flipMark)
-  $('#cell-6-img').one('click', flipMark)
-  $('#cell-7-img').one('click', flipMark)
-  $('#cell-8-img').one('click', flipMark)
+  for (let i = 0; i < gameCellIDs.length; i++) {
+    const id = gameCellIDs[i]
+    $('#' + id).on('click', flipMark)
+  }
   if (firstTime) {
     $('#replay-button').on('click', replayButtonClick)
   }
 }
+const disableGameBoardClicks = function () {
+  for (let i = 0; i < gameCellIDs.length; i++) {
+    const id = gameCellIDs[i]
+    $('#' + id).off()
+  }
+}
+
 const updatePlayerButton = function () {
   const element = document.getElementById('game-button')
   console.log('updatePlayerButton called')
@@ -148,17 +151,24 @@ const transformLocation = function (imgID) {
   return data[1]
 }
 const replayButtonClick = function () {
-  console.log('replayButtonClick')
+  // console.log('replayButtonClick')
   clearBoard()
   clearGameState()
   setUpGameBoardHandlers(false)
   resetPlayerButtonToX()
   isPlayerX = true
-  console.log('currentGame data: ', currentGame)
+  // console.log('currentGame data: ', currentGame)
+}
+const cleanUpAfterPlayerSignOff = function () {
+  clearBoard()
+  clearGameState()
+  resetPlayerButtonToX()
+  isPlayerX = true
+  disableGameBoardClicks()
 }
 
 const checkForWinner = function () {
-  console.log('checkForWinner called')
+  // console.log('checkForWinner called')
   let result
   for (let i = 0; i < winningCombinations.length; i++) {
     const value1 = currentGame.game.cells[winningCombinations[i][0]]
@@ -206,16 +216,12 @@ const clearGameState = function () {
     currentGame.game.cells[i] = ''
   }
 }
-const getCurrentGameStats = function () {
-  api.getUserGames()
-    .then(ui.getUserGamesSuccess)
-    .catch(ui.getUserGamesFailure)
-}
 const resetPlayerButtonToX = function () {
   const element = document.getElementById('game-button')
   console.log('resetPlayerButtonToX called')
   element.value = gameBoardImages[0].buttonXlabel
 }
 module.exports = {
-  setUpGameBoardHandlers
+  setUpGameBoardHandlers,
+  cleanUpAfterPlayerSignOff
 }
