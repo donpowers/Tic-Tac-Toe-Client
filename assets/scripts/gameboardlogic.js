@@ -3,18 +3,17 @@
 const api = require('./auth/api')
 const ui = require('./auth/ui')
 const calulateWins = require('./calculateWins')
-const findGameWinner = require('./findGameWinner')
 
 const gameBoardImages = [
   {
     mark: 'X',
     markImage: '../assets/images/X.png',
-    buttonXlabel: 'PLAYER X IS PLAYING'
+    text: 'PLAYER X IS PLAYING'
   },
   {
     mark: 'O',
     markImage: '../assets/images/O.png',
-    buttonOlabel: 'PLAYER O IS PLAYING'
+    text: 'PLAYER O IS PLAYING'
   },
   {
     mark: 'blank',
@@ -68,23 +67,23 @@ const gameMoveUpdate = {
   }
 }
 let isPlayerX = true
+let winsSinceLoggedIN = 0
 
 const flipMark = function () {
-  console.log('flipMark Called', this)
+  // console.log('flipMark Called', this)
   // update move
   $('#' + this.id).off()
   const cellToUpdate = parseInt(transformLocation(this.id))
-  console.log('flipMark updating cell: ' + cellToUpdate)
+  // console.log('flipMark updating cell: ' + cellToUpdate)
+  gameMoveUpdate.game.cell.index = cellToUpdate
   if (isXplaying()) {
     currentGame.game.cells[cellToUpdate] = 'x'
-    gameMoveUpdate.game.cell.index = cellToUpdate
     gameMoveUpdate.game.cell.value = 'x'
   } else {
     currentGame.game.cells[cellToUpdate] = 'o'
-    gameMoveUpdate.game.cell.index = cellToUpdate
     gameMoveUpdate.game.cell.value = 'o'
   }
-  console.log('currentGame: ', currentGame)
+  // console.log('currentGame: ', currentGame)
   // Update the cell image for this turn
   if (isXplaying()) {
     this.setAttribute('src', gameBoardImages[0].markImage)
@@ -96,11 +95,15 @@ const flipMark = function () {
   // const winner2 = findGameWinner.checkForWinner(currentGame)
   const winner = checkForWinner()
   if (winner) {
+    winsSinceLoggedIN++
     gameMoveUpdate['game'].over = true
     disableGameBoardClicks()
     const wins = calulateWins.getTotalWinsLoses()
-    console.log('Wins for Player X: ' + wins)
-    alert(winner + ' is winner! Total wins: ' + wins)
+    if (winner === 'x') {
+      updateInfoArea('X Is The Winner! Total wins: ' + (wins + winsSinceLoggedIN))
+    } else {
+      updateInfoArea('O Is The Winner!')
+    }
   } else if (anyMovesLeft()) {
     updatePlayerButton()
     gameMoveUpdate['game'].over = false
@@ -109,7 +112,8 @@ const flipMark = function () {
     gameMoveUpdate.game.over = true
     alert('Cats Meow, Try Again')
   }
-  console.log('flipMark gameMoveUpdate: ', gameMoveUpdate)
+  // console.log('flipMark gameMoveUpdate: ', gameMoveUpdate)
+  // send completed move to the back end
   api.updateGameState(gameMoveUpdate)
     .then(ui.updateGameStateSuccess)
     .catch(ui.updateGameStateFailure)
@@ -118,7 +122,8 @@ const flipMark = function () {
 
 // Adds the cards to the DOM.
 const setUpGameBoardHandlers = function (firstTime) {
-  for (let i = 0; i < gameCellIDs.length; i++) {
+  let i
+  for (i in gameCellIDs) {
     const id = gameCellIDs[i]
     $('#' + id).on('click', flipMark)
   }
@@ -127,32 +132,32 @@ const setUpGameBoardHandlers = function (firstTime) {
   }
 }
 const disableGameBoardClicks = function () {
-  for (let i = 0; i < gameCellIDs.length; i++) {
+  let i
+  for (i in gameCellIDs) {
     const id = gameCellIDs[i]
     $('#' + id).off()
   }
 }
 
 const updatePlayerButton = function () {
-  const element = document.getElementById('game-button')
-  console.log('updatePlayerButton called')
+  // console.log('updatePlayerButton called')
+  let label = gameBoardImages[0].text
   if (isXplaying()) {
-    element.value = gameBoardImages[1].buttonOlabel
-  } else {
-    element.value = gameBoardImages[0].buttonXlabel
+    label = gameBoardImages[1].text
   }
+  updateInfoArea(label)
 }
 const isXplaying = function () {
   let result = false
   if (isPlayerX) {
     result = true
   }
-  console.log('isXplaying :' + result)
+  // console.log('isXplaying :' + result)
   return result
 }
 const transformLocation = function (imgID) {
   const data = imgID.split('-')
-  console.log('transformLocation returning:' + data[1])
+  // console.log('transformLocation returning:' + data[1])
   return data[1]
 }
 const replayButtonClick = function () {
@@ -160,14 +165,14 @@ const replayButtonClick = function () {
   clearBoard()
   clearGameState()
   setUpGameBoardHandlers(false)
-  resetPlayerButtonToX()
+  resetInfoToX()
   isPlayerX = true
   // console.log('currentGame data: ', currentGame)
 }
 const cleanUpAfterPlayerSignOff = function () {
   clearBoard()
   clearGameState()
-  resetPlayerButtonToX()
+  resetInfoToX()
   isPlayerX = true
   disableGameBoardClicks()
 }
@@ -190,7 +195,7 @@ const checkForWinner = function () {
       break
     }
   }
-  console.log('checkForWinner returning: ' + result)
+  // console.log('checkForWinner returning: ' + result)
   return result
 }
 const anyMovesLeft = function () {
@@ -205,26 +210,31 @@ const anyMovesLeft = function () {
       break
     }
   }
-  console.log('anyMovesLeft returning: ' + result)
+  // console.log('anyMovesLeft returning: ' + result)
   return result
 }
 const clearBoard = function () {
   // reset to blank images
-  for (let i = 0; i < gameCellIDs.length; i++) {
-    const element = document.getElementById(gameCellIDs[i])
-    element.setAttribute('src', gameBoardImages[2].markImage)
+  let i
+  for (i in gameCellIDs) {
+    const id = gameCellIDs[i]
+    $('#' + id).attr('src', gameBoardImages[2].markImage)
   }
 }
 const clearGameState = function () {
-  console.log('clearGameState called')
-  for (let i = 0; i < currentGame.game.cells.length; i++) {
+  // console.log('clearGameState called')
+  let i
+  for (i in currentGame.game.cells) {
     currentGame.game.cells[i] = ''
   }
 }
-const resetPlayerButtonToX = function () {
-  const element = document.getElementById('game-button')
-  console.log('resetPlayerButtonToX called')
-  element.value = gameBoardImages[0].buttonXlabel
+const updateInfoArea = function (updateText) {
+  // console.log('updateInfoArea to: ' + updateText)
+  $('#currentPlayer').text(updateText)
+}
+const resetInfoToX = function () {
+  const label = gameBoardImages[0].text
+  updateInfoArea(label)
 }
 module.exports = {
   setUpGameBoardHandlers,
