@@ -2,7 +2,8 @@
 
 const api = require('./auth/api')
 const ui = require('./auth/ui')
-// const store = require('./store')
+const calulateWins = require('./calculateWins')
+const findGameWinner = require('./findGameWinner')
 
 const gameBoardImages = [
   {
@@ -90,10 +91,14 @@ const flipMark = function () {
     this.setAttribute('src', gameBoardImages[1].markImage)
   }
   // check for a winner
+  // debugger
+  // const winner2 = findGameWinner.checkForWinner(currentGame)
   const winner = checkForWinner()
   if (winner) {
     gameMoveUpdate['game'].over = true
-    alert(winner + ' is winner!')
+    const wins = calulateWins.getTotalWinsLoses()
+    console.log('Wins for Player X: ' + wins)
+    alert(winner + ' is winner! Total wins: ' + wins)
   } else if (anyMovesLeft()) {
     updatePlayerButton()
     gameMoveUpdate['game'].over = false
@@ -205,11 +210,6 @@ const clearGameState = function () {
   for (let i = 0; i < currentGame.game.cells.length; i++) {
     currentGame.game.cells[i] = ''
   }
-}
-const getCurrentGameStats = function () {
-  api.getUserGames()
-    .then(ui.getUserGamesSuccess)
-    .catch(ui.getUserGamesFailure)
 }
 const resetPlayerButtonToX = function () {
   const element = document.getElementById('game-button')
