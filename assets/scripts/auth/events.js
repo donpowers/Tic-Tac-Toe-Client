@@ -43,6 +43,11 @@ const onChangePassword = function (event) {
     .then(ui.changePasswordSuccess)
     .catch(ui.changePasswordFailure)
 }
+const onPlayerMoveUpate = function (data) {
+  api.updateGameState(data)
+    .then(ui.updateGameStateSuccess)
+    .catch(ui.updateGameStateFailure)
+}
 const addHandlers = () => {
   $('#sign-up').on('submit', onSignUp)
   $('#sign-in').on('submit', onSignIn)
@@ -50,5 +55,6 @@ const addHandlers = () => {
   $('#change-password').on('submit', onChangePassword)
 }
 module.exports = {
-  addHandlers
+  addHandlers,
+  onPlayerMoveUpate
 }

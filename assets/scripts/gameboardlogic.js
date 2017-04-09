@@ -105,19 +105,14 @@ const flipMark = function () {
       updateInfoArea('O Is The Winner!')
     }
   } else if (anyMovesLeft()) {
-    updatePlayerButton()
+    updateWhoIsPlaying()
     gameMoveUpdate['game'].over = false
     isPlayerX = !isPlayerX
   } else {
     gameMoveUpdate.game.over = true
-    alert('Cats Meow, Try Again')
+    updateInfoArea('Cats Meow, Try Again!')
   }
-  // console.log('flipMark gameMoveUpdate: ', gameMoveUpdate)
-  // send completed move to the back end
-  api.updateGameState(gameMoveUpdate)
-    .then(ui.updateGameStateSuccess)
-    .catch(ui.updateGameStateFailure)
-  // getCurrentGameStats()
+  updateBackEndWithMove()
 }
 
 // Adds the cards to the DOM.
@@ -139,7 +134,7 @@ const disableGameBoardClicks = function () {
   }
 }
 
-const updatePlayerButton = function () {
+const updateWhoIsPlaying = function () {
   // console.log('updatePlayerButton called')
   let label = gameBoardImages[0].text
   if (isXplaying()) {
@@ -235,6 +230,11 @@ const updateInfoArea = function (updateText) {
 const resetInfoToX = function () {
   const label = gameBoardImages[0].text
   updateInfoArea(label)
+}
+const updateBackEndWithMove = function () {
+  api.updateGameState(gameMoveUpdate)
+   .then(ui.updateGameStateSuccess)
+   .catch(ui.updateGameStateFailure)
 }
 module.exports = {
   setUpGameBoardHandlers,
