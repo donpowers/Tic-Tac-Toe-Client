@@ -7,17 +7,17 @@ const calulateWins = require('./calculateWins')
 const gameBoardImages = [
   {
     mark: 'X',
-    markImage: '../assets/images/X.png',
+    markImage: 'http://i.imgur.com/Wr7ayeZ.png',
     text: 'PLAYER X IS PLAYING'
   },
   {
     mark: 'O',
-    markImage: '../assets/images/O.png',
+    markImage: 'http://i.imgur.com/t3RKokr.png',
     text: 'PLAYER O IS PLAYING'
   },
   {
     mark: 'blank',
-    markImage: '../assets/images/blank.jpg'
+    markImage: 'http://i.imgur.com/yNtTbJw.jpg'
   }
 ]
 const gameCellIDs = [
