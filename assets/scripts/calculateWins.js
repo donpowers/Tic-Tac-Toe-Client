@@ -16,14 +16,14 @@ const getUserGamesSuccess = (data) => {
   // console.log('getUserGamesSuccess Data: ', data)
   store.gameStats = data.games
   // console.log('getUserGamesSuccess Store: ', store)
-  console.log('getUserGamesSuccess:WINS: ' + getTotalWinsLoses())
+  // console.log('getUserGamesSuccess:WINS: ' + getTotalWinsLoses())
 }
 const getUserGamesFailure = (data) => {
-  console.log('getUserGamesFailure called', data)
+  // console.log('getUserGamesFailure called', data)
 }
 const getTotalWinsLoses = function () {
   let wins = 0
-  let incompleteGames = 0
+  // let incompleteGames = 0
   // console.log('Store gamestats: ', store.gameStats)
   for (let i = 0; i < store.gameStats.length; i++) {
     const game = store.gameStats[i]
@@ -35,11 +35,11 @@ const getTotalWinsLoses = function () {
         wins++
       }
     } else {
-      incompleteGames++
+      // incompleteGames++
     }
   }
-  console.log('getTotalWinsLoses wins: ' + wins)
-  console.log('getTotalWinsLoses incompleteGames: ' + incompleteGames)
+  // console.log('getTotalWinsLoses wins: ' + wins)
+  // console.log('getTotalWinsLoses incompleteGames: ' + incompleteGames)
   return wins
 }
 
