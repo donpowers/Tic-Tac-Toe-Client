@@ -6,14 +6,14 @@ const gameboardlogic = require('../gameboardlogic')
 const calculateWins = require('../calculateWins')
 
 const signUpSuccess = (data) => {
-  console.log(data)
+  // console.log(data)
 }
 
 const signUpFailure = (error) => {
-  console.error(error)
+  // console.error(error)
 }
 const signInSuccess = (data) => {
-  console.log('Sign-in success: ', data)
+  // console.log('Sign-in success: ', data)
   store.user = data.user
   const createData = {}
   api.createGame(createData)
@@ -24,38 +24,38 @@ const signInSuccess = (data) => {
 }
 
 const signInFailure = (error) => {
-  console.log('Sign In Failure')
+  // console.log('Sign In Failure')
   console.error(error)
 }
 const signOutSuccess = () => {
-  console.log('Sign Out success: ')
+  // console.log('Sign Out success: ')
   // clean up the stored value
   store.user = null
   gameboardlogic.cleanUpAfterPlayerSignOff()
 }
 const signOutFailure = (error) => {
-  console.log('Sign Out Failure')
+  // console.log('Sign Out Failure')
   console.error(error)
 }
 const changePasswordSuccess = () => {
-  console.log('Change Password success')
+  // console.log('Change Password success')
 }
 const changePasswordFailure = (error) => {
-  console.log('Change Password Out Failure')
+  // console.log('Change Password Out Failure')
   console.error(error)
 }
 const createGameSuccess = (data) => {
   store.game = data.game
-  console.log('createGameSuccess called', store)
+  // console.log('createGameSuccess called', store)
 }
 const createGameFailure = (data) => {
-  console.log('createGameFailure called')
+  // console.log('createGameFailure called')
 }
 const updateGameStateSuccess = (data) => {
-  console.log('updateGameStateSuccess success data: ', data)
+  // console.log('updateGameStateSuccess success data: ', data)
 }
 const updateGameStateFailure = (data) => {
-  console.log('updateGameStateFailure called', data)
+  // console.log('updateGameStateFailure called', data)
 }
 
 module.exports = {

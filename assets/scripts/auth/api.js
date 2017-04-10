@@ -4,7 +4,7 @@ const config = require('../config')
 const store = require('../store')
 
 const signUp = (data) => {
-  console.log('signUp in api called')
+  // console.log('signUp in api called')
   return $.ajax({
     url: config.apiOrigin + '/sign-up',
     method: 'POST',
@@ -12,7 +12,7 @@ const signUp = (data) => {
   })
 }
 const signIn = (data) => {
-  console.log('Api:signIn called')
+  // console.log('Api:signIn called')
   return $.ajax({
     url: config.apiOrigin + '/sign-in',
     method: 'POST',
@@ -31,7 +31,7 @@ const changePassword = function (data) {
 }
 
 const signOut = (data) => {
-  console.log('Api:sign OUT called')
+  // console.log('Api:sign OUT called')
   return $.ajax({
     url: config.apiOrigin + '/sign-out/' + store.user.id,
     method: 'DELETE',
@@ -40,7 +40,7 @@ const signOut = (data) => {
   })
 }
 const createGame = (data) => {
-  console.log('Create Game Called')
+  // console.log('Create Game Called')
   return $.ajax({
     url: config.apiOrigin + '/games',
     method: 'POST',
@@ -50,8 +50,8 @@ const createGame = (data) => {
   })
 }
 const updateGameState = (data) => {
-  console.log('updateGameState Called showing store', store)
-  console.log('updateGameState Called showing data', data)
+  // console.log('updateGameState Called showing store', store)
+  // console.log('updateGameState Called showing data', data)
   const id = store.game.id
   return $.ajax({
     url: config.apiOrigin + '/games/' + id,
@@ -62,7 +62,7 @@ const updateGameState = (data) => {
   })
 }
 const getUserGames = (data) => {
-  console.log('getUserGames Called')
+  // console.log('getUserGames Called')
   return $.ajax({
     url: config.apiOrigin + '/games',
     method: 'GET',

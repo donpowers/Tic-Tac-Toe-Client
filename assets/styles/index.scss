@@ -6,6 +6,9 @@ $background-color: #4e4e4e;
 $font-color: #dfdfdf;
 $white: #fff;
 $yellow: #ff0;
+$solid-black: #788;
+$solid-blacker: #688;
+$solid-blackest: #288;
 
 .square {
   border: 2px solid $solid-black;
@@ -15,11 +18,39 @@ $yellow: #ff0;
 }
 
 img {
-  height: 70px;
+  height: 60px;
   object-fit: cover;
-  width: 70px;
+  width: 60px;
 }
 
 .gb-outside-order {
   margin-left: 20px;
+}
+
+.dark-bg {
+  background: $solid-black;
+}
+
+.darker-bg {
+  background: $solid-blacker;
+}
+
+.darkest-bg {
+  background: $solid-blackest;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+body {
+  background: $solid-blacker;
+  border: 1px solid $solid-black;
+}
+
+.winner {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.box-text {
+  text-align: center;
 }
