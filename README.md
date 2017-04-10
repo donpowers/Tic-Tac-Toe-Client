@@ -1,9 +1,10 @@
 [![General Assembly Logo](https://camo.githubusercontent.com/1a91b05b8f4d44b5bbfb83abac2b0996d8e26c92/687474703a2f2f692e696d6775722e636f6d2f6b6538555354712e706e67)](https://generalassemb.ly/education/web-development-immersive)
 
 # Tic-Tac-Toe  https://donpowers.github.io/Tic-Tac-Toe-Client/
+Repo: https://github.com/donpowers/Tic-Tac-Toe-Client
 Goals
 
-1. Build a web application from scratch, without a starter codebase
+1. Build a web Tic-Tac-Toe application from scratch, without a starter codebase
 2. Using my programming skills, map out the game logic for a simple game like Tic Tac Toe
 3. eparate HTML, CSS, and JavaScript files in your application
 4. Build an application to a spec that someone else gives you
@@ -67,14 +68,14 @@ http://i.imgur.com/Ml7FeJx.jpg
 
 ##Game approach
 
-My approach was a concept that is often talked about at work, Minimum Vialbe
+My approach was a concept that is often talked about at work, Minimum Viable
 Product or MVP. The goal is have a product with the minimal features, so that
 users feedback can be recieved early, allowing adjustments to be made, with
 minimal work upfront. Looking at the requirements I created a simple wireframe.
 Next I created user stories from the requirements based from the User's
 perspective.
 I started out with a basic UI, building the sign up and sign in user stories. We were
-just introduced to bootstrap, so I wanted to use some of these componets. I thought
+just introduced to bootstrap, so I wanted to use some of these components. I thought
 I had followed what we had done in class when working with sigup/in, giving each
 input the proper ID so that it could be read in via the helper function
 getFormFields.  Well I missed the critical part 'form' tag.  After much
@@ -86,7 +87,7 @@ Trying to be clever, I gave my IDs a similar root and I would build off of that
 root to access the related elements. I happened to be using images as my X and O.
 One of the features I wanted to implement if time permitted was to allow the user
 to change the mark used in the game. It turns out the ID for these images I built
-using the string concatinate feature. I assigned this to a variable with the idea
+using the string concatenate feature. I assigned this to a variable with the idea
 to place this variable inside of $(). Well there were no lint errors and things
 appeared fine, until there were no events being recieved. When I used
 element.addHandlers things worked as expected. WTF! Several hours later and into the
@@ -95,9 +96,9 @@ I was able to add the event using the element method, I could not disable the
 event, one of the requirements, the user should not be able to click more than
 once in the same cell. When I hard coded the ID(did not build it as a string), it
 worked as expected.  Sometime later I learned that jquery, when passing a string
-does some magic behind the sceene, to determine what you are passing.  With a
-little more reseach(and many hours) I learned that you can build the string
-inside $('#'+id+img) and it works like a charm! Unforunately while I was trying
+does some magic behind the scene, to determine what you are passing.  With a
+little more research(and many hours) I learned that you can build the string
+inside $('#'+id+img) and it works like a charm! Unfortunately while I was trying
 to figure this issue out I was working on several things at one time, trying to
 keep the ball moving. By the time I had to merge my code back, there were more
 changes in many branches that I had not yet merged. OMG, what do I do now? All the
@@ -122,7 +123,7 @@ behind. On Friday I did my first attempt at deploy. It was not overly clear what
 was needed.  There were errors. Sure I read them, but it was like reading another
 language. After reading someone else's issue post, I just took the git command
 listed in the error message and ran it. Sure enough whatever thing was not as
-expected got fixed and my deploy was succesful.
+expected got fixed and my deploy was successful.
 Saturday, not that my game logic was working I was able to start on determing
 the Wins.  I had some challenges parsing the arrays. I finally was able to
 determine the correct way to index them and get the necessary totals.
@@ -132,13 +133,13 @@ suggestion to use for(i in id). I was always using 'length' to iterate over
 my arrays. I thanked the person and made some changes.
 Sunday, I finally was able to revisit the UI. I watch some videos on bootstrap,
 used the websites and started on making my UI better.  Four hours later I was
-struggling with rows and colums and getting no where fast. I abandom that idea
+struggling with rows and colums and getting no where fast. I abandon that idea
 and decided time was running out. I cleaned up my FE and called it a wrap, that
 is after I commented out all my console messages.  Also, getting my images
 on the web, since for some reason they did not deploy, known issue?
 
 I think I made all the requirements. I code could be cleaned up a bit, some
-reuse could be done(determing game winner) and using some of the built in
+reuse could be done(determining game winner) and using some of the built in
 array features when parsing the games. I don't think there are bugs, HA!
 
 Building the FE with bootstrap is something that I was not able to do. My plan,
