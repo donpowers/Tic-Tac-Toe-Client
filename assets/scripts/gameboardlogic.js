@@ -172,7 +172,9 @@ const cleanUpAfterPlayerSignOff = function () {
   isPlayerX = true
   disableGameBoardClicks()
 }
-
+const disableReplayButton = function () {
+  $('#replay-button').off()
+}
 const checkForWinner = function () {
   // console.log('checkForWinner called')
   let result
@@ -239,5 +241,6 @@ const updateBackEndWithMove = function () {
 }
 module.exports = {
   setUpGameBoardHandlers,
-  cleanUpAfterPlayerSignOff
+  cleanUpAfterPlayerSignOff,
+  disableReplayButton
 }

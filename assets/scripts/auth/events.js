@@ -26,7 +26,6 @@ const onSignOut = (data) => {
   event.preventDefault()
   if (store.user == null) {
     // console.log('No One to Sign Out')
-    alert('No User Signed In')
     return
   }
   // console.log('Api:sign OUT called')
