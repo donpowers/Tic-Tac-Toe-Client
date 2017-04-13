@@ -95,12 +95,13 @@ const flipMark = function () {
   // const winner2 = findGameWinner.checkForWinner(currentGame)
   const winner = checkForWinner()
   if (winner) {
-    winsSinceLoggedIN++
     gameMoveUpdate['game'].over = true
     disableGameBoardClicks()
     const wins = calulateWins.getTotalWinsLoses()
     if (winner === 'x') {
       updateInfoArea('X Is The Winner! Total wins: ' + (wins + winsSinceLoggedIN))
+      // we are only keeping track of X's wins
+      winsSinceLoggedIN++
     } else {
       updateInfoArea('O Is The Winner!')
     }
