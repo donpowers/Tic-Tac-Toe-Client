@@ -95,12 +95,13 @@ const flipMark = function () {
   // const winner2 = findGameWinner.checkForWinner(currentGame)
   const winner = checkForWinner()
   if (winner) {
-    winsSinceLoggedIN++
     gameMoveUpdate['game'].over = true
     disableGameBoardClicks()
     const wins = calulateWins.getTotalWinsLoses()
     if (winner === 'x') {
       updateInfoArea('X Is The Winner! Total wins: ' + (wins + winsSinceLoggedIN))
+      // we are only keeping track of X's wins
+      winsSinceLoggedIN++
     } else {
       updateInfoArea('O Is The Winner!')
     }
@@ -122,10 +123,9 @@ const setUpGameBoardHandlers = function (firstTime) {
     const id = gameCellIDs[i]
     $('#' + id).on('click', flipMark)
   }
-  if (firstTime) {
-    $('#replay-button').on('click', replayButtonClick)
-  }
+  $('#replay-button').show()
 }
+
 const disableGameBoardClicks = function () {
   let i
   for (i in gameCellIDs) {
@@ -171,7 +171,10 @@ const cleanUpAfterPlayerSignOff = function () {
   isPlayerX = true
   disableGameBoardClicks()
 }
-
+const disableReplayButton = function () {
+  // console.log('disableReplayButton called')
+  $('#replay-button').hide()
+}
 const checkForWinner = function () {
   // console.log('checkForWinner called')
   let result
@@ -236,7 +239,13 @@ const updateBackEndWithMove = function () {
    .then(ui.updateGameStateSuccess)
    .catch(ui.updateGameStateFailure)
 }
+const resetWinsSinceLoggedIN = function () {
+  winsSinceLoggedIN = 0
+}
 module.exports = {
   setUpGameBoardHandlers,
-  cleanUpAfterPlayerSignOff
+  cleanUpAfterPlayerSignOff,
+  disableReplayButton,
+  replayButtonClick,
+  resetWinsSinceLoggedIN
 }

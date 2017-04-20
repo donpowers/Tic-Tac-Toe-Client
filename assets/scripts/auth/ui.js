@@ -10,10 +10,10 @@ const signUpSuccess = (data) => {
 }
 
 const signUpFailure = (error) => {
-  // console.error(error)
+  console.error(error)
 }
 const signInSuccess = (data) => {
-  // console.log('Sign-in success: ', data)
+  console.log('Sign-in success: ', data)
   store.user = data.user
   const createData = {}
   api.createGame(createData)
@@ -32,6 +32,8 @@ const signOutSuccess = () => {
   // clean up the stored value
   store.user = null
   gameboardlogic.cleanUpAfterPlayerSignOff()
+  gameboardlogic.disableReplayButton()
+  gameboardlogic.resetWinsSinceLoggedIN()
 }
 const signOutFailure = (error) => {
   // console.log('Sign Out Failure')
@@ -46,7 +48,7 @@ const changePasswordFailure = (error) => {
 }
 const createGameSuccess = (data) => {
   store.game = data.game
-  // console.log('createGameSuccess called', store)
+  console.log('createGameSuccess called', store)
 }
 const createGameFailure = (data) => {
   // console.log('createGameFailure called')
@@ -57,7 +59,15 @@ const updateGameStateSuccess = (data) => {
 const updateGameStateFailure = (data) => {
   // console.log('updateGameStateFailure called', data)
 }
-
+const replayCreateGameSuccess = (data) => {
+  console.log('Replay Game success: ', data)
+  store.game = data.game
+  console.log('createGameSuccess called', store)
+  gameboardlogic.replayButtonClick()
+}
+const replayCreateGameFailure = (data) => {
+  console.log('replayCreateGameFailure called', data)
+}
 module.exports = {
   signUpSuccess,
   signUpFailure,
@@ -68,5 +78,7 @@ module.exports = {
   changePasswordFailure,
   changePasswordSuccess,
   updateGameStateSuccess,
-  updateGameStateFailure
+  updateGameStateFailure,
+  replayCreateGameSuccess,
+  replayCreateGameFailure
 }

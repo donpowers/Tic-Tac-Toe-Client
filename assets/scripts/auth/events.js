@@ -26,7 +26,6 @@ const onSignOut = (data) => {
   event.preventDefault()
   if (store.user == null) {
     // console.log('No One to Sign Out')
-    alert('No User Signed In')
     return
   }
   // console.log('Api:sign OUT called')
@@ -48,13 +47,29 @@ const onPlayerMoveUpate = function (data) {
     .then(ui.updateGameStateSuccess)
     .catch(ui.updateGameStateFailure)
 }
+// const onReplayCreateGame = function () {
+//   const createData = {}
+//   api.createGame(createData)
+//     .then(ui.replayCreateGameSuccess)
+//     .catch(ui.replayCreateGameFailure)
+// }
+const onReplayCreateGame = function (event) {
+  // console.log('onReplayCreateGame called')
+  event.preventDefault()
+  api.createGame()
+    .then(ui.replayCreateGameSuccess)
+    .catch(ui.replayCreateGameFailure)
+}
 const addHandlers = () => {
   $('#sign-up').on('submit', onSignUp)
   $('#sign-in').on('submit', onSignIn)
   $('#sign-out').on('submit', onSignOut)
   $('#change-password').on('submit', onChangePassword)
+  $('#replay-button').hide()
+  $('#replay-button').on('click', onReplayCreateGame)
 }
 module.exports = {
   addHandlers,
-  onPlayerMoveUpate
+  onPlayerMoveUpate,
+  onReplayCreateGame
 }
