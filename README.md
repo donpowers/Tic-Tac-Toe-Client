@@ -74,6 +74,7 @@ users feedback can be recieved early, allowing adjustments to be made, with
 minimal work upfront. Looking at the requirements I created a simple wireframe.
 Next I created user stories from the requirements based from the User's
 perspective.
+
 I started out with a basic UI, building the sign up and sign in user stories. We were
 just introduced to bootstrap, so I wanted to use some of these components. I thought
 I had followed what we had done in class when working with sigup/in, giving each
@@ -81,6 +82,7 @@ input the proper ID so that it could be read in via the helper function
 getFormFields.  Well I missed the critical part 'form' tag.  After much
 debugging I realized my error. The clock was ticking and already I hit an
 unexpected bump, one of many along the way.
+
 Next, jquery and I had a did not see I to eye to eye.  I had given my tags ids
 to help manage them so they could be used to identify the elements in the DOM.
 Trying to be clever, I gave my IDs a similar root and I would build off of that
@@ -98,39 +100,49 @@ once in the same cell. When I hard coded the ID(did not build it as a string), i
 worked as expected.  Sometime later I learned that jquery, when passing a string
 does some magic behind the scene, to determine what you are passing.  With a
 little more research(and many hours) I learned that you can build the string
-inside $('#'+id+img) and it works like a charm! Unfortunately while I was trying
+inside $('#'+id+img) and it works like a charm!
+
+Unfortunately while I was trying
 to figure this issue out I was working on several things at one time, trying to
 keep the ball moving. By the time I had to merge my code back, there were more
 changes in many branches that I had not yet merged. OMG, what do I do now? All the
 code got in, without to much heartache and learning more about GIT.
+
 Next, I built the game logic, storing the game results locally. This took some
 time. Looking at the api, I created my game objects to reflect what the api was
 either going to pass back or needed sent.  This decision helped build the api
 calls since I had working knowledge of the objects. Api calls followed a pattern
 that lead to building them out straight forward. Sending the current play to the api
 was a success out of the box. The return object was as expected, a nice feeling.
+
 I did have some cut and paste challenges when saving my local version of the
 game.  I failed to update similar but different lines of code. This was not an easy
 fix, since I looked at the line of code many times, thinking this is as it should
 be, but in the end it was not!  Beware cut n paste issues!
+
 I also hit a road block when starting a new game.  It was not as straight forward
 as I thought it was going to be.  I spent several hours getting this to work. I
 spent must of Friday working on this.  This prevented me from finishing the
 next user story which determines the number of games won. It also pushed back
 my desire to get a more fancy front end design.  By this time several others
 had some impressive front ends and I was starting to feel like I was falling
-behind. On Friday I did my first attempt at deploy. It was not overly clear what
+behind.
+
+On Friday I did my first attempt at deploy. It was not overly clear what
 was needed.  There were errors. Sure I read them, but it was like reading another
 language. After reading someone else's issue post, I just took the git command
 listed in the error message and ran it. Sure enough whatever thing was not as
 expected got fixed and my deploy was successful.
+
 Saturday, not that my game logic was working I was able to start on determing
 the Wins.  I had some challenges parsing the arrays. I finally was able to
 determine the correct way to index them and get the necessary totals.
+
 After this checkin, I notice that someone had posted a comment to my TTT repo!
 I left it public, never thinking someone would look at my code. Well they had a
 suggestion to use for(i in id). I was always using 'length' to iterate over
 my arrays. I thanked the person and made some changes.
+
 Sunday, I finally was able to revisit the UI. I watch some videos on bootstrap,
 used the websites and started on making my UI better.  Four hours later I was
 struggling with rows and colums and getting no where fast. I abandon that idea

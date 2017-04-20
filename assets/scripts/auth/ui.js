@@ -13,7 +13,7 @@ const signUpFailure = (error) => {
   console.error(error)
 }
 const signInSuccess = (data) => {
-  console.log('Sign-in success: ', data)
+  // console.log('Sign-in success: ', data)
   store.user = data.user
   const createData = {}
   api.createGame(createData)
@@ -48,7 +48,7 @@ const changePasswordFailure = (error) => {
 }
 const createGameSuccess = (data) => {
   store.game = data.game
-  console.log('createGameSuccess called', store)
+  // console.log('createGameSuccess called', store)
 }
 const createGameFailure = (data) => {
   // console.log('createGameFailure called')
@@ -60,9 +60,9 @@ const updateGameStateFailure = (data) => {
   // console.log('updateGameStateFailure called', data)
 }
 const replayCreateGameSuccess = (data) => {
-  console.log('Replay Game success: ', data)
+  // console.log('Replay Game success: ', data)
   store.game = data.game
-  console.log('createGameSuccess called', store)
+  // console.log('createGameSuccess called', store)
   gameboardlogic.replayButtonClick()
 }
 const replayCreateGameFailure = (data) => {
