@@ -6,7 +6,7 @@ Goals
 
 1. Build a web Tic-Tac-Toe application from scratch, without a starter codebase
 2. Using my programming skills, map out the game logic for a simple game like Tic Tac Toe
-3. eparate HTML, CSS, and JavaScript files in your application
+3. Separate HTML, CSS, and JavaScript files in your application
 4. Build an application to a spec that someone else gives you
 5. Build a dynamic game that allows two players to compete (bonus: compete from separate devices)
 6. Craft a readme.md file that explains your app to the world
@@ -33,7 +33,7 @@ Requirements
 1. Be a single-page application.
 2. Use a custom game engine written by you.
 3. Be deployed online, where the rest of the world can access it.
-4 .Render a game board in the browser.
+4. Render a game board in the browser.
 5. Switch turns between X and O (or whichever markers you select).
 6. Visually display which side won if a player gets three in a row
 or show a draw/"cat’s game" if neither wins.
