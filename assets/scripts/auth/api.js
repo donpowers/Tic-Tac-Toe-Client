@@ -40,7 +40,8 @@ const signOut = (data) => {
   })
 }
 const createGame = (data) => {
-  // console.log('Create Game Called')
+  // console.log('Create Game Called data:', data)
+  // console.log('Store: ', store)
   return $.ajax({
     url: config.apiOrigin + '/games',
     method: 'POST',

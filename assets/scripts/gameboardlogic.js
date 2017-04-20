@@ -123,10 +123,9 @@ const setUpGameBoardHandlers = function (firstTime) {
     const id = gameCellIDs[i]
     $('#' + id).on('click', flipMark)
   }
-  if (firstTime) {
-    $('#replay-button').on('click', replayButtonClick)
-  }
+  $('#replay-button').show()
 }
+
 const disableGameBoardClicks = function () {
   let i
   for (i in gameCellIDs) {
@@ -173,7 +172,8 @@ const cleanUpAfterPlayerSignOff = function () {
   disableGameBoardClicks()
 }
 const disableReplayButton = function () {
-  $('#replay-button').off()
+  // console.log('disableReplayButton called')
+  $('#replay-button').hide()
 }
 const checkForWinner = function () {
   // console.log('checkForWinner called')
@@ -239,8 +239,13 @@ const updateBackEndWithMove = function () {
    .then(ui.updateGameStateSuccess)
    .catch(ui.updateGameStateFailure)
 }
+const resetWinsSinceLoggedIN = function () {
+  winsSinceLoggedIN = 0
+}
 module.exports = {
   setUpGameBoardHandlers,
   cleanUpAfterPlayerSignOff,
-  disableReplayButton
+  disableReplayButton,
+  replayButtonClick,
+  resetWinsSinceLoggedIN
 }
