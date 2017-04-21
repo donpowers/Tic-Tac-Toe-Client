@@ -2,6 +2,7 @@
 
 const api = require('./auth/api')
 const ui = require('./auth/ui')
+// const events = require('./auth/events')
 const calulateWins = require('./calculateWins')
 
 const gameBoardImages = [
@@ -79,24 +80,20 @@ const flipMark = function () {
   if (isXplaying()) {
     currentGame.game.cells[cellToUpdate] = 'x'
     gameMoveUpdate.game.cell.value = 'x'
+    // Update the cell image for this turn
+    this.setAttribute('src', gameBoardImages[0].markImage)
   } else {
     currentGame.game.cells[cellToUpdate] = 'o'
     gameMoveUpdate.game.cell.value = 'o'
-  }
-  // console.log('currentGame: ', currentGame)
-  // Update the cell image for this turn
-  if (isXplaying()) {
-    this.setAttribute('src', gameBoardImages[0].markImage)
-  } else {
+    // Update the cell image for this turn
     this.setAttribute('src', gameBoardImages[1].markImage)
   }
+
   // check for a winner
-  // debugger
-  // const winner2 = findGameWinner.checkForWinner(currentGame)
   const winner = checkForWinner()
   if (winner) {
     gameMoveUpdate['game'].over = true
-    disableGameBoardClicks()
+    removeAllGameBoardEventListerners()
     const wins = calulateWins.getTotalWinsLoses()
     if (winner === 'x') {
       updateInfoArea('X Is The Winner! Total wins: ' + (wins + winsSinceLoggedIN))
@@ -106,9 +103,10 @@ const flipMark = function () {
       updateInfoArea('O Is The Winner!')
     }
   } else if (anyMovesLeft()) {
-    updateWhoIsPlaying()
-    gameMoveUpdate['game'].over = false
+    // update who is playing
     isPlayerX = !isPlayerX
+    updateWhoIsPlayingMessage()
+    gameMoveUpdate['game'].over = false
   } else {
     gameMoveUpdate.game.over = true
     updateInfoArea('Cats Meow, Try Again!')
@@ -118,6 +116,7 @@ const flipMark = function () {
 
 // Adds the cards to the DOM.
 const setUpGameBoardHandlers = function (firstTime) {
+  // console.log('setUpGameBoardHandlers')
   let i
   for (i in gameCellIDs) {
     const id = gameCellIDs[i]
@@ -126,7 +125,7 @@ const setUpGameBoardHandlers = function (firstTime) {
   $('#replay-button').show()
 }
 
-const disableGameBoardClicks = function () {
+const removeAllGameBoardEventListerners = function () {
   let i
   for (i in gameCellIDs) {
     const id = gameCellIDs[i]
@@ -134,8 +133,7 @@ const disableGameBoardClicks = function () {
   }
 }
 
-const updateWhoIsPlaying = function () {
-  // console.log('updatePlayerButton called')
+const updateWhoIsPlayingMessage = function () {
   let label = gameBoardImages[0].text
   if (isXplaying()) {
     label = gameBoardImages[1].text
@@ -159,17 +157,19 @@ const replayButtonClick = function () {
   // console.log('replayButtonClick')
   clearBoard()
   clearGameState()
-  setUpGameBoardHandlers(false)
   resetInfoToX()
+  // We don't know those that are on/off set all off then on again
+  removeAllGameBoardEventListerners()
+  setUpGameBoardHandlers(true)
   isPlayerX = true
-  // console.log('currentGame data: ', currentGame)
+  // console.log('replayButtonClick:currentGame data: ', currentGame)
 }
 const cleanUpAfterPlayerSignOff = function () {
   clearBoard()
   clearGameState()
   resetInfoToX()
   isPlayerX = true
-  disableGameBoardClicks()
+  removeAllGameBoardEventListerners()
 }
 const disableReplayButton = function () {
   // console.log('disableReplayButton called')
@@ -235,6 +235,7 @@ const resetInfoToX = function () {
   updateInfoArea(label)
 }
 const updateBackEndWithMove = function () {
+  // console.log('updateBackEndWithMove')
   api.updateGameState(gameMoveUpdate)
    .then(ui.updateGameStateSuccess)
    .catch(ui.updateGameStateFailure)
