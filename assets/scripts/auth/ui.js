@@ -12,6 +12,7 @@ const signUpSuccess = (data) => {
 const signUpFailure = (error) => {
   console.error(error)
 }
+
 const signInSuccess = (data) => {
   // console.log('Sign-in success: ', data)
   store.user = data.user
@@ -66,7 +67,7 @@ const replayCreateGameSuccess = (data) => {
   gameboardlogic.replayButtonClick()
 }
 const replayCreateGameFailure = (data) => {
-  console.log('replayCreateGameFailure called', data)
+  // console.log('replayCreateGameFailure called', data)
 }
 module.exports = {
   signUpSuccess,
