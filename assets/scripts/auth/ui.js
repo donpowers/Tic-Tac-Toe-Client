@@ -6,15 +6,20 @@ const gameboardlogic = require('../gameboardlogic')
 const calculateWins = require('../calculateWins')
 
 const signUpSuccess = (data) => {
-  // console.log(data)
+  // console.log('signUpSuccess calledd: ', data)
+  // Clear the form data entered
+  $('#sign-up').trigger('reset')
 }
 
 const signUpFailure = (error) => {
+  $('#sign-up').trigger('reset')
   console.error(error)
 }
 
 const signInSuccess = (data) => {
   // console.log('Sign-in success: ', data)
+  // Clear the form data entered
+  $('#sign-in').trigger('reset')
   store.user = data.user
   const createData = {}
   api.createGame(createData)
@@ -26,6 +31,7 @@ const signInSuccess = (data) => {
 
 const signInFailure = (error) => {
   // console.log('Sign In Failure')
+  $('#sign-in').trigger('reset')
   console.error(error)
 }
 const signOutSuccess = () => {
@@ -41,10 +47,13 @@ const signOutFailure = (error) => {
   console.error(error)
 }
 const changePasswordSuccess = () => {
+  // Clear the form data entered
+  $('#change-password').trigger('reset')
   // console.log('Change Password success')
 }
 const changePasswordFailure = (error) => {
   // console.log('Change Password Out Failure')
+  $('#change-password').trigger('reset')
   console.error(error)
 }
 const createGameSuccess = (data) => {
