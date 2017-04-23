@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>Tic Tac Toe</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <!-- Do not add `link` tags unless you know what you are doing -->
+      <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+      <!-- Do not add `script` tags unless you know what you are doing -->
+      <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
+      <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
+    </head>
+    <body class="container ">
+      <h1>Tic Tac Toe</h1>
+      <form id="sign-up">
+      <fieldset>
+        <div class="input-group">
+          <span class="input-group-addon"  id="emailAddress"></span>
+          <input type="text" name="credentials[email]" class="form-control" placeholder="Email Address" aria-describedby="basic-addon1">
+          <span class="input-group-addon" id="passWord"></span>
+          <input type="password" name="credentials[password]" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+          <span class="input-group-addon" id="basic-addon1"></span>
+          <input type="password" name="credentials[password_confirmation]" class="form-control" placeholder="Password Confirmation" aria-describedby="basic-addon1">
+        </div>
+          <input type="submit" name="submit" value="Sign up">
+      </fieldset>
+      <br>
+      </form>
+      <form id="sign-in">
+      <fieldset>
+      <div class="input-group">
+        <span class="input-group-addon"  id="emailAddress"></span>
+        <input type="text" name="credentials[email]" class="form-control" placeholder="Email Address" aria-describedby="basic-addon1">
+        <span class="input-group-addon" id="passWord"></span>
+        <input type="password" name="credentials[password]" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+      </div>
+        <input type="submit" name="submit" value="Sign In">
+      </fieldset>
+      <br>
+    </form>
+    <form id="change-password">
+    <fieldset>
+    <div class="input-group">
+      <span class="input-group-addon"  id="old-password"></span>
+      <input type="password" name="passwords[old]" class="form-control" placeholder="Old Password" aria-describedby="basic-addon1">
+      <span class="input-group-addon" id="passWord"></span>
+      <input type="password" name="passwords[new]" class="form-control" placeholder="New Password" aria-describedby="basic-addon1">
+    </div>
+      <input type="submit" name="submit" value="Change Password">
+    </fieldset>
+    <br>
+  </form>
+    <form id="sign-out">
+      <fieldset>
+      <input type="submit" name="submit" value="Sign Off">
+      </fieldset>
+    </form>
+    <br>
+    <br>
+    <div class="who-is-playing">
+      <span class="winner" id="currentPlayer">PLAYER X IS PLAYING</span>
+    </div>
+    <br>
+    <div class="gb-outside-order" id="gameBoard">
+    <div class="row">
+        <div class="col-xs-4 square" id="cell-0">
+        <img id="cell-0-img" src="http://i.imgur.com/yNtTbJw.jpg" alt="Mark">
+        </div>
+        <div class="col-xs-4 square" id="cell-1">
+          <img id="cell-1-img" src="http://i.imgur.com/yNtTbJw.jpg" alt="Mark">
+        </div>
+        <div class="col-xs-4 square" id="cell-2">
+          <img id="cell-2-img" src="http://i.imgur.com/yNtTbJw.jpg" alt="Mark">
+        </div>
+    </div>
+      <div class="row">
+        <div class="col-xs-4 square" id="cell-3">
+          <img id="cell-3-img" src="http://i.imgur.com/yNtTbJw.jpg" alt="Mark">
+        </div>
+        <div class="col-xs-4 square" id="cell-4">
+          <img id="cell-4-img" src="http://i.imgur.com/yNtTbJw.jpg" alt="Mark">
+        </div>
+        <div class="col-xs-4 square" id="cell-5">
+          <img id="cell-5-img" src="http://i.imgur.com/yNtTbJw.jpg" alt="Mark">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-4 square" id="cell-6">
+          <img id="cell-6-img" src="http://i.imgur.com/yNtTbJw.jpg" alt="Mark">
+        </div>
+        <div class="col-xs-4 square" id="cell-7">
+          <img id="cell-7-img" src="http://i.imgur.com/yNtTbJw.jpg" alt="Mark">
+        </div>
+        <div class="col-xs-4 square" id="cell-8">
+          <img id="cell-8-img" src="http://i.imgur.com/yNtTbJw.jpg" alt="Mark">
+        </div>
+      </div>
+    </div>
+  <br>
+  <div class="replay-button">
+    <input type="submit" id="replay-button" name="game button" value="Replay">
+  </div>
+   </body>
+</html>
