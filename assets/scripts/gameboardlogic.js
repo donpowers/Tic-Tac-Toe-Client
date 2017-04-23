@@ -96,9 +96,10 @@ const flipMark = function () {
     removeAllGameBoardEventListerners()
     const wins = calulateWins.getTotalWinsLoses()
     if (winner === 'x') {
-      updateInfoArea('X Is The Winner! Total wins: ' + (wins + winsSinceLoggedIN))
       // we are only keeping track of X's wins
       winsSinceLoggedIN++
+      updateInfoArea('X Is The Winner! Total wins for X: ' + (wins + winsSinceLoggedIN))
+      // we are only keeping track of X's wins
     } else {
       updateInfoArea('O Is The Winner!')
     }
